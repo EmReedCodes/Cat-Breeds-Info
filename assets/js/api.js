@@ -1,5 +1,6 @@
-var token = config.MY_API_TOKEN;
-var key = config.SECRET_API_KEY; //didnt end up needing this
+//for cat breeds
+var key = config.SECRET_API_KEY;
+//for petfinder
 
 
 //declare empty data variable
@@ -34,7 +35,6 @@ fetch(BREEDS_URL)
                 }
              
    
-            let firstLink = document.querySelector('.breeds-menu')
             let option = document.createElement('option') 
             option.classList.add('breed-names')
             option.value = res[i].name
@@ -83,13 +83,16 @@ fetch(BREEDS_URL)
             shedding = catData[i].shedding_level
             intelligence = catData[i].intelligence
             social = catData[i].social_needs
+
+           
+
 //i need to take these 5 data points and inject them in order into the new cells i created
 
         let newArr = [affection, energy, shedding, intelligence, social]
         console.log(newArr)
         let table = document.querySelector('table')
 
-        generateTable(table)
+       generateTable(table)
 
         function generateTable(table, data){
                 let row = table.insertRow() //create a new row 
@@ -101,10 +104,18 @@ fetch(BREEDS_URL)
                     cell.append(text) // add that text to each new cell created
                 }
         }
+
+        // if(energy > 3){
+        //     toggleGifOn()
+        // }
+      
+        
+
+     
         let tempList = temperament.split(',') //making temperament into array
         console.log(tempList)
         for(let i = 0; i < tempList.length; i++){ //for each trait
-            console.log(i)
+            console.log(i)                                                                                                                                    
             const li = document.createElement('li') //create li
             li.classList.add('clear')
             li.innerText = tempList[i] //display the trait here
@@ -112,23 +123,77 @@ fetch(BREEDS_URL)
          }
 
 
-}   
+    }   
 
 }
 
-   // let parentLink = document.querySelector('.alink')
-    // let a = document.createElement('a');
-    // a.href = "#"
-    // // a.textContent="Click here"
-    // parentLink.appendChild(a);
-  
+
     // document.querySelector('.wikInfo').innerText = 'For more information about this breed please visit:'
     // document.querySelector('.aLink').innerHTML = `<a href="${wiki}" target="_blank">${wiki}</a>`
     document.querySelector('.description').innerText= description
     document.querySelector('.cat-img').src = catImgUrl
 
 
-    })
+})
+
+// fetch("https://api.petfinder.com/v2/oauth2/token", {
+//   body: `grant_type=client_credentials&client_id={Ore2no3bqTec2s8k4M3Nzh3zuoK0t2N0pllkl5lp2evOOukxUL}&client_secret={vH37jzPPJ0lo0jKajzO5lUznozYEhqoJycbPWJ4Y}`,
+//   headers: {
+//     "Content-Type": "application/x-www-form-urlencoded"
+//   },
+//   method: "POST"
+// })
+
+// .then((res) => res.json())
+// .then((data) => {
+//   console.log(data)
+// })
+
+let finderToken = config2.SECRET_API2;
+let finderClientID = config2.MY_API_KEY2;
+let token2 
+
+//hide and unhide gifs
+// function toggleGifOn(){
+//     document.querySelector('.hidden').classList.toggle("hidden");
+// }
+
+// function toggleGifOff(){
+//        document.querySelector('.hidden').classList.remove("hidden");
+// }
+
+// GET https://api.codetabs.com/v1/proxy?quest=<url_to_http_resource>
+
+  // get authorization token
+  
+ 
+//   import fetch from 'node-fetch';
+
+//   fetch('https://api.petfinder.com/v2/oauth2/token', {
+//       method: 'POST',
+//       headers: {
+//           'Content-Type': 'application/x-www-form-urlencoded'
+//       },
+//       body: `grant_type=client_credentials&client_id={finderClientID}&client_secret={finderToken}`
+    
+//     .then(res => res.json())
+//     .then(data => {
+//         console.log(data)    
+//     })
+// });
+
+fetch("https://api.petfinder.com/v2/oauth2/token", {
+  body: "grant_type=client_credentials&client_id={435a0150-7a8a-4f06-a720-0ca6979e4d06}&client_secret={Ore2no3bqTec2s8k4M3Nzh3zuoK0t2N0pllkl5lp2evOOukxUL}",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  method: "POST"
+})
+
+
+
+
+
 
     // // function addShedding(){
 //     const newParent = document.querySelector('.container')
