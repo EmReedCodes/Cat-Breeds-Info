@@ -182,13 +182,13 @@ let token2
 //     })
 // });
 
-fetch("https://api.petfinder.com/v2/oauth2/token", {
-  body: "grant_type=client_credentials&client_id={435a0150-7a8a-4f06-a720-0ca6979e4d06}&client_secret={Ore2no3bqTec2s8k4M3Nzh3zuoK0t2N0pllkl5lp2evOOukxUL}",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  method: "POST"
-})
+// fetch("https://api.petfinder.com/v2/oauth2/token", {
+//   body: "grant_type=client_credentials&client_id={435a0150-7a8a-4f06-a720-0ca6979e4d06}&client_secret={Ore2no3bqTec2s8k4M3Nzh3zuoK0t2N0pllkl5lp2evOOukxUL}",
+//   headers: {
+//     "Content-Type": "application/x-www-form-urlencoded"
+//   },
+//   method: "POST"
+// })
 
 
 
