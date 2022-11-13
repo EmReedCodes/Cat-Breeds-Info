@@ -1,3 +1,32 @@
+// import { isValidZip, showAlert } from "/validate";
+
+// Validate Zipcode
+function isValidZip(zip) {
+  return /^\d{5}(-\d{4})?$/.test(zip);
+}
+
+// Display Alert Message
+function showAlert(message, className) {
+  // Create div
+  const div = document.createElement('div');
+  // Add Classes
+  div.className = `alert alert-${className}`;
+  // Add Text
+  div.appendChild(document.createTextNode(message));
+  // Get Container
+  // const container = document.querySelector('.container-zip');
+  const alertBox = document.querySelector('.alert-msg')
+  // Get Form
+   const input = document.querySelector('.input-zip');
+  // Insert Alert
+  // container.insertBefore(div, container);
+  alertBox.append(div)
+
+  setTimeout(() => document.querySelector('.alert').remove(), 3000);
+}
+
+
+
 //for cat breeds
 var key = config.SECRET_API_KEY;
 //for petfinder
@@ -13,6 +42,8 @@ let catData
 const BREEDS_URL = `https://api.thecatapi.com/v1/breeds?${key}` //breeds api //has all info like temperament
 
 const select = document.querySelector('.breeds-menu') //grabbing breed name
+
+
 
 fetch(BREEDS_URL)
     .then(res => res.json())
@@ -68,7 +99,7 @@ fetch(BREEDS_URL)
 
     
     for(let i = 0; i < catData.length; i++){ //interate through the catData
-        breedName = catData[i].name //grabbing the name for my template literal
+        // let breedName = catData[i].name //grabbing the name for my template literal
 
      
         if(catData[i].name === breed){ //array item name === breed that was clicked on catData[i].name
@@ -90,32 +121,28 @@ fetch(BREEDS_URL)
 
         let newArr = [affection, energy, shedding, intelligence, social]
         console.log(newArr)
-        let table = document.querySelector('table')
-
-       generateTable(table)
-
-        function generateTable(table, data){
-                let row = table.insertRow() //create a new row 
-            
-                for(let j = 0; j < newArr.length; j++){
-                    let cell = row.insertCell() //within that row place a cell 5 times
-                    row.classList.add('traitCells', 'clear') //add these classes
-                    let text = innerText = newArr[j] //add the array data to text
-                    cell.append(text) // add that text to each new cell created
-                }
-        }
-
-        // if(energy > 3){
-        //     toggleGifOn()
-        // }
       
+        let table = document.querySelector('table')
+      
+
+       function generateTable(table, data){
         
+        let row = table.insertRow() //create a new row 
+
+        for(let j = 0; j < newArr.length; j++){
+            let cell = row.insertCell() //within that row place a cell 5 times
+            row.classList.add('traitCells', 'clear') //add these classes
+            let text = newArr[j] //add the array data to text
+            cell.append(text) // add that text to each new cell created
+        }
+}
+// }
+generateTable(table)
 
      
         let tempList = temperament.split(',') //making temperament into array
         console.log(tempList)
         for(let i = 0; i < tempList.length; i++){ //for each trait
-            console.log(i)                                                                                                                                    
             const li = document.createElement('li') //create li
             li.classList.add('clear')
             li.innerText = tempList[i] //display the trait here
@@ -127,97 +154,89 @@ fetch(BREEDS_URL)
 
 }
 
-
-    // document.querySelector('.wikInfo').innerText = 'For more information about this breed please visit:'
-    // document.querySelector('.aLink').innerHTML = `<a href="${wiki}" target="_blank">${wiki}</a>`
     document.querySelector('.description').innerText= description
     document.querySelector('.cat-img').src = catImgUrl
-
-
 })
 
-// fetch("https://api.petfinder.com/v2/oauth2/token", {
-//   body: `grant_type=client_credentials&client_id={Ore2no3bqTec2s8k4M3Nzh3zuoK0t2N0pllkl5lp2evOOukxUL}&client_secret={vH37jzPPJ0lo0jKajzO5lUznozYEhqoJycbPWJ4Y}`,
-//   headers: {
-//     "Content-Type": "application/x-www-form-urlencoded"
-//   },
-//   method: "POST"
-// })
 
-// .then((res) => res.json())
-// .then((data) => {
-//   console.log(data)
-// })
+document.getElementById('search').addEventListener('click', getCats)
 
-let finderToken = config2.SECRET_API2;
-let finderClientID = config2.MY_API_KEY2;
-let token2 
 
-//hide and unhide gifs
-// function toggleGifOn(){
-//     document.querySelector('.hidden').classList.toggle("hidden");
-// }
+async function getCats(e){
+  //e.preventDefault()
+  const zip = document.querySelector("#zipCode").value;
+  console.log(zip)
+  if(!isValidZip(zip)){
+    showAlert('Please enter a valid zipcode', 'danger')
+  }
 
-// function toggleGifOff(){
-//        document.querySelector('.hidden').classList.remove("hidden");
-// }
 
-// GET https://api.codetabs.com/v1/proxy?quest=<url_to_http_resource>
+  //fetch pets
+const client_id = "TWbeVCsWr0XVxQ0VkULeEOdV8J11jrtWgKHtz4SmmmfjnVQ3XC";
+const client_secret = "tTSmmgBoz6uhihsFEDbZvlm7XaGKm7NsL8mUfWIt";
+let token
 
-  // get authorization token
+await fetch("https://api.petfinder.com/v2/oauth2/token", {
+  method: "POST", // or 'PUT'
+  body: 
+  `grant_type=client_credentials&client_id=${client_id}&client_secret=${client_secret}`,
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    // The application/x-www-form-urlencoded content type describes form data that is sent in a single block in the HTTP message body. Unlike the query part of the URL in a GET request, the length of the data is unrestricted.
+  },
   
- 
-//   import fetch from 'node-fetch';
+})
+  .then((response) => response.json())
+  .then((data) => {
+    token = data.access_token;
 
-//   fetch('https://api.petfinder.com/v2/oauth2/token', {
-//       method: 'POST',
-//       headers: {
-//           'Content-Type': 'application/x-www-form-urlencoded'
-//       },
-//       body: `grant_type=client_credentials&client_id={finderClientID}&client_secret={finderToken}`
-    
-//     .then(res => res.json())
-//     .then(data => {
-//         console.log(data)    
-//     })
-// });
+  })
+  .then(() => {
+    // use token to fetch animals
+    fetch(
+      `https://api.petfinder.com/v2/animals?type=Cat`,
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        console.log(data.animals[0].breeds)
+      });
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 
-// fetch("https://api.petfinder.com/v2/oauth2/token", {
-//   body: "grant_type=client_credentials&client_id={435a0150-7a8a-4f06-a720-0ca6979e4d06}&client_secret={Ore2no3bqTec2s8k4M3Nzh3zuoK0t2N0pllkl5lp2evOOukxUL}",
-//   headers: {
-//     "Content-Type": "application/x-www-form-urlencoded"
-//   },
-//   method: "POST"
-// })
+}
 
 
+// async function getCats(e) {
+//     //e.preventDefault()
+//   const zip = document.querySelector("#zipCode").value;
+//   console.log(zip)
+//   if(!isValidZip(zip)){
+//     showAlert('Please enter a valid zipcode', 'danger')
+//   }
 
 
-
-
-    // // function addShedding(){
-//     const newParent = document.querySelector('.container')
-//     const newDiv =  document.createElement('div')
-//     newDiv.classList.add('attLevels')
-//     const newContent = document.createTextNode(`The ${breedName} has low shedding!`)
-//     newDiv.appendChild(newContent)
-//     const currentDiv = document.querySelector('h3')
-//     newParent.insertBefore(newDiv, currentDiv)
-
-// }
-// let newContent
-// function addEnergy(){
-//     const newParent = document.querySelector('.container') 
-//     const newDiv =  document.createElement('div') //create a div
-//     newDiv.classList.add('attLevels') //add class to it
-//     if(NodeList < 0){ //if this is the first node
-//          newContent = document.createTextNode(`The ${breedName} has a lot of energy so be prepared!`) //put this there
-//     }else{
-//         newContent = document.createTextNode(`They has a lot of energy so be prepared!`) //use this sentence instead
-//     }
-   
-//     newDiv.appendChild(newContent)
-//     const currentDiv = document.querySelector('h3')
-//     newParent.insertBefore(newDiv, currentDiv)
-
+//   //fetch pets
+// const client_id = "TWbeVCsWr0XVxQ0VkULeEOdV8J11jrtWgKHtz4SmmmfjnVQ3XC";
+// const client_secret = "tTSmmgBoz6uhihsFEDbZvlm7XaGKm7NsL8mUfWIt";
+// let token
+//   try {
+//     const [data1, data2] = await Promise.all([
+//       fetch(endpoints.one),
+//       fetch(endpoints.two),
+//     ]);
+//     console.log(data1, data2);
+//   } catch (err) {
+//     console.log(err);
+//   }
 // }
