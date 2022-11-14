@@ -1,35 +1,32 @@
 // import { isValidZip, showAlert } from "/validate";
 
 // Validate Zipcode
-function isValidZip(zip) {
-  return /^\d{5}(-\d{4})?$/.test(zip);
-}
+// function isValidZip(zip) {
+//   return /^\d{5}(-\d{4})?$/.test(zip);
+// }
 
-// Display Alert Message
-function showAlert(message, className) {
-  // Create div
-  const div = document.createElement('div');
-  // Add Classes
-  div.className = `alert alert-${className}`;
-  // Add Text
-  div.appendChild(document.createTextNode(message));
-  // Get Container
-  // const container = document.querySelector('.container-zip');
-  const alertBox = document.querySelector('.alert-msg')
-  // Get Form
-   const input = document.querySelector('.input-zip');
-  // Insert Alert
-  // container.insertBefore(div, container);
-  alertBox.append(div)
+// // Display Alert Message
+// function showAlert(message, className) {
+//   // Create div
+//   const div = document.createElement('div');
+//   // Add Classes
+//   div.className = `alert alert-${className}`;
+//   // Add Text
+//   div.appendChild(document.createTextNode(message));
+//   // Get Container
+//   // const container = document.querySelector('.container-zip');
+//   const alertBox = document.querySelector('.alert-msg')
+//   // Get Form
+//    const input = document.querySelector('.input-zip');
+//   // Insert Alert
+//   // container.insertBefore(div, container);
+//   alertBox.append(div)
 
-  setTimeout(() => document.querySelector('.alert').remove(), 3000);
-}
+//   setTimeout(() => document.querySelector('.alert').remove(), 3000);
+// }
 
 
 
-//for cat breeds
-var key = config.SECRET_API_KEY;
-//for petfinder
 
 
 //declare empty data variable
@@ -162,59 +159,58 @@ generateTable(table)
 document.getElementById('search').addEventListener('click', getCats)
 
 
-async function getCats(e){
-  //e.preventDefault()
-  const zip = document.querySelector("#zipCode").value;
-  console.log(zip)
-  if(!isValidZip(zip)){
-    showAlert('Please enter a valid zipcode', 'danger')
-  }
+// async function getCats(e){
+//   //e.preventDefault()
+//   const zip = document.querySelector("#zipCode").value;
+//   console.log(zip)
+//   if(!isValidZip(zip)){
+//     showAlert('Please enter a valid zipcode', 'danger')
+//   }
 
 
-  //fetch pets
-const client_id = "TWbeVCsWr0XVxQ0VkULeEOdV8J11jrtWgKHtz4SmmmfjnVQ3XC";
-const client_secret = "tTSmmgBoz6uhihsFEDbZvlm7XaGKm7NsL8mUfWIt";
-let token
+//   //fetch pets
 
-await fetch("https://api.petfinder.com/v2/oauth2/token", {
-  method: "POST", // or 'PUT'
-  body: 
-  `grant_type=client_credentials&client_id=${client_id}&client_secret=${client_secret}`,
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-    // The application/x-www-form-urlencoded content type describes form data that is sent in a single block in the HTTP message body. Unlike the query part of the URL in a GET request, the length of the data is unrestricted.
-  },
+// let token
+
+// await fetch("https://api.petfinder.com/v2/oauth2/token", {
+//   method: "POST", // or 'PUT'
+//   body: 
+//   `grant_type=client_credentials&client_id=${client_id}&client_secret=${client_secret}`,
+//   headers: {
+//     "Content-Type": "application/x-www-form-urlencoded",
+//     // The application/x-www-form-urlencoded content type describes form data that is sent in a single block in the HTTP message body. Unlike the query part of the URL in a GET request, the length of the data is unrestricted.
+//   },
   
-})
-  .then((response) => response.json())
-  .then((data) => {
-    token = data.access_token;
+// })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     token = data.access_token;
 
-  })
-  .then(() => {
-    // use token to fetch animals
-    fetch(
-      `https://api.petfinder.com/v2/animals?type=Cat`,
-      {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        console.log(data.animals[0].breeds)
-      });
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
+//   })
+//   .then(() => {
+//     // use token to fetch animals
+//     fetch(
+//       `https://api.petfinder.com/v2/animals?type=Cat`,
+//       {
+//         method: "GET",
+//         mode: "cors",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: "Bearer " + token,
+//         },
+//       }
+//     )
+//       .then((res) => res.json())
+//       .then((data) => {
+//         console.log(data)
+//         console.log(data.animals[0].breeds)
+//       });
+//   })
+//   .catch((error) => {
+//     console.error("Error:", error);
+//   });
 
-}
+// }
 
 
 // async function getCats(e) {
